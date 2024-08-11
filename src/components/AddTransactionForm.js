@@ -9,6 +9,8 @@ function AddTransactionForm({ onAddTransaction }) {
     amount: ""
   });
 
+  const [error, setError] = useState ("");
+
   // Handle changes to form input fields
   function handleChange(e) {
     const { name, value } = e.target;
@@ -19,6 +21,17 @@ function AddTransactionForm({ onAddTransaction }) {
   // Handle form submission
   function handleSubmit(e) {
     e.preventDefault(); // Prevent the default form submission behavior
+    if (!formData.date||!formData.description||!formData.category||!formData.amount){
+      setError("All fields are required");
+    }
+
+    if (isNaN(formData.amount) || parseFloat(formData.amount)<=0){
+      setError
+       ("Amount must be a positive number");
+      return;
+    }
+    
+    setError("");
     onAddTransaction(formData); // Call the parent component's function with formData
     // Reset form fields to empty values
     setFormData({ date: "", description: "", category: "", amount: "" });
@@ -62,6 +75,7 @@ function AddTransactionForm({ onAddTransaction }) {
             onChange={handleChange} 
           />
         </div>
+        {error && <div className = "ui red message">{error}</div>}
         {/* Submit button for the form */}
         <button className="ui button" type="submit">Add Transaction</button>
       </form>

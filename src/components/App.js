@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import AccountContainer from "./AccountContainer";
 
 function App() {
@@ -12,7 +12,8 @@ function App() {
   useEffect(() => {
     fetch("http://localhost:8001/transactions")
       .then((response) => response.json()) // Parse the JSON from the response
-      .then((data) => setTransactions(data)); // Update state with the fetched data
+      .then((data) => setTransactions(data)) // Update state with the fetched data
+      .catch((error)=> console.error ("Error fetching transactions:", error));
   }, []); // Empty dependency array means this effect runs once on mount
 
   // Function to add a new transaction
@@ -25,7 +26,8 @@ function App() {
       body: JSON.stringify(newTransaction), // Convert newTransaction object to JSON string
     })
       .then((response) => response.json()) // Parse the JSON from the response
-      .then((data) => setTransactions([...transactions, data])); // Add new transaction to the existing list
+      .then((data) => setTransactions([...transactions, data])) // Add new transaction to the existing list
+      .catch((error) => console.error ("Error adding transaction:", error));
   }
 
   // Function to update the search term state
@@ -34,12 +36,12 @@ function App() {
   }
 
   // Filter transactions based on the search term
-  function filteredTransactions() {
+  const filteredTransactions=useMemo (() => {
     if (!searchTerm) return transactions; // Return all transactions if no search term
     return transactions.filter((transaction) =>
       transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }
+  }, [searchTerm, transactions]);
 
   return (
     <div className="ui raised segment">
