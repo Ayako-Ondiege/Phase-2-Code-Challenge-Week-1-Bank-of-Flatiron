@@ -49,7 +49,7 @@ function App() {
         <h2>The Royal Bank of Flatiron</h2>
       </div>
       <AccountContainer
-        transactions={filteredTransactions()} // Pass filtered transactions to AccountContainer
+        transactions={filteredTransactions} // Pass filtered transactions to AccountContainer
         onAddTransaction={addTransaction} // Pass addTransaction function to AccountContainer
         onSearch={handleSearch} // Pass handleSearch function to AccountContainer
       />

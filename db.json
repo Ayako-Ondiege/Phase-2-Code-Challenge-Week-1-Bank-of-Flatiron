@@ -160,6 +160,20 @@
       "category": "",
       "amount": "",
       "id": 23
+    },
+    {
+      "date": "2024-08-13",
+      "description": "",
+      "category": "",
+      "amount": "",
+      "id": 24
+    },
+    {
+      "date": "2024-08-14",
+      "description": "ABC",
+      "category": "XYZ",
+      "amount": "10000",
+      "id": 25
     }
   ]
 }
